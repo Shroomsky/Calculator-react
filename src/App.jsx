@@ -45,10 +45,12 @@ export function App() {
 
 	function handleOperatorClick(operator) {		
 		if (calcData.first == null && calcData.operator == null) {
-			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));			
+			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));
+			setDisp("0")			
 		} else if (operator) {		
 			calculation(calcData);
 			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));
+			setDisp("0")
 		} else {
 			return;
 		}		
@@ -71,7 +73,7 @@ export function App() {
 	}
 
 	disp.length == 0 && setDisp("0");
-	console.log(calcData)
+
 	return (
 		<div className="Calculator">
 			<Display>{disp}</Display>
