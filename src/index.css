@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ====== css reset ===== */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--main-color: rgb(229, 231, 235);
+	--second-color: rgb(204, 204, 204);
+	--third-color: rgb(162, 162, 162);
+	--c-color: rgb(244, 67, 54);
+	--res-color: rgb(255, 152, 0);
+}
+html,
+body {
+	min-height: 100vh;
+	font-size: 16px;
+	scroll-behavior: smooth;
+	-webkit-tap-highlight-color: transparent;
+	font-family: "Roboto", sans-serif;
+}
+body {
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+input[type="number"] {
+	appearance: textfield;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+#root,
+#__next {
+	isolation: isolate;
+}
+
+a,
+a:link,
+a:visited {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* ====== css reset ===== */
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	background-color: var(--main-color);
+	font-family: "Poppins", sans-serif;
+}
