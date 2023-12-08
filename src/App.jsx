@@ -51,16 +51,14 @@ export function App() {
 			calculation(calcData);
 			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));
 			setDisp("0")
-		} else {
-			return;
-		}		
+		} 
 	}
 
 	function handleNumericButtonClick(number) {
 		if (calcData.first == null) {
 			setDisp((prev) => (prev == "0" ? number : prev + number));
 		} else if (calcData.first != null && calcData.operator != null) {
-			console.log("kuku")
+			
 			setDisp(disp == "0" ? number : disp + number);
 		} else if (calcData.first != null && disp != "0") {
 			setCalcData((prev) => ({ ...prev, first: disp }));
