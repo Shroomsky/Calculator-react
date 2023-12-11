@@ -5,35 +5,33 @@ import { Display } from "./components/Display/Display";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 
-const initialCalcData = { first: null, operator: null };
-
 export function App() {
 	const [disp, setDisp] = useState("0");
-	const [calcData, setCalcData] = useState(initialCalcData);
 	const [memory, setMemory] = useState(0);
 
-	function calculation({ first, operator }) {
-		if (operator != null) {
-			let s = Number(disp);
-			let result = eval(`${Number(first)}${operator}${s}`);
-			setDisp(result.toString());
-			setCalcData(initialCalcData);
+	function calculation() {
+		try {
+			setDisp(eval(disp));
+		} catch (error) {
+			if (error) {
+				setDisp("Error");
+			}
 		}
 	}
 
 	function handleMemoryBtnClick(operation) {
 		const value = parseFloat(disp);
 		switch (operation) {
-			case  "+":
-				setMemory((prev) => (prev + value));
-				setDisp("0")
+			case "+":
+				setMemory((prev) => prev + value);
+				setDisp("0");
 				break;
 			case "-":
-				setMemory((prev) => (prev - value));
-				setDisp("0")
+				setMemory((prev) => prev - value);
+				setDisp("0");
 				break;
 			case "c":
-				setDisp("0")
+				setDisp("0");
 				setMemory(0);
 				break;
 			default:
@@ -42,27 +40,19 @@ export function App() {
 		}
 	}
 
-
-	function handleOperatorClick(operator) {		
-		if (calcData.first == null && calcData.operator == null) {
-			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));
-			setDisp("0")			
-		} else if (operator) {		
-			calculation(calcData);
-			setCalcData((prev) => ({ ...prev, first: disp, operator: operator }));
-			setDisp("0")
-		} 
+	function handleOperatorClick(operator) {
+		if (disp == "0") {
+			setDisp(disp.slice(0, -1) + operator);
+		} else {
+			setDisp((prev) => (prev += operator));
+		}
 	}
 
 	function handleNumericButtonClick(number) {
-		if (calcData.first == null) {
-			setDisp((prev) => (prev == "0" ? number : prev + number));
-		} else if (calcData.first != null && calcData.operator != null) {
-			
-			setDisp(disp == "0" ? number : disp + number);
-		} else if (calcData.first != null && disp != "0") {
-			setCalcData((prev) => ({ ...prev, first: disp }));
-			setDisp((prev) => (prev == "0" ? number : prev + number));
+		if (disp == "0" && number != ".") {
+			setDisp(disp.slice(0, -1) + number);
+		} else {
+			setDisp((prev) => (prev += number));
 		}
 	}
 
@@ -77,7 +67,7 @@ export function App() {
 			<Display>{disp}</Display>
 
 			<div className="grid grid-cols-4 gap-3">
-			<Button
+				<Button
 					grid="col-start-1 col-span-2"
 					setDisp={handleRemoveBtnClik}
 					bgColor="bg-orange-400"
@@ -90,11 +80,10 @@ export function App() {
 					color="text-white"
 					setDisp={() => {
 						setDisp("");
-						setCalcData(initialCalcData);
 					}}>
 					C
 				</Button>
-				
+
 				<Button
 					setDisp={() => handleMemoryBtnClick("+")}
 					bgColor="bg-orange-400"
@@ -119,7 +108,7 @@ export function App() {
 					color="text-white">
 					MC
 				</Button>
-				
+
 				<Button setDisp={() => handleNumericButtonClick("1")}>1</Button>
 				<Button setDisp={() => handleNumericButtonClick("2")}>2</Button>
 				<Button setDisp={() => handleNumericButtonClick("3")}>3</Button>
@@ -169,9 +158,7 @@ export function App() {
 					/
 				</Button>
 				<Button
-					setDisp={() => {
-						calculation(calcData);
-					}}
+					setDisp={calculation}
 					bgColor="bg-orange-400"
 					color="text-white"
 					grid=" col-span-4">
